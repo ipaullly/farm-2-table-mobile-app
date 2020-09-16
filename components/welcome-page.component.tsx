@@ -1,14 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 
-const WelcomePage = () => {
-	const handlePress = () => {
-		// navigate to sign up form
-	}
-
-	const handleLoginRedirect = () => {
-		// navigate to login options page
-	}
+const WelcomePage = (props: any) => {
 
   return (
 		<View style={styles.container}>
@@ -25,12 +18,12 @@ const WelcomePage = () => {
 			</View>
 			<Button
 				title='Create Account'
-				onPress={() => handlePress()}
+				onPress={() => props.navigation.navigate('register')}
 			/>
 			<View style={styles.loginText}>
 				<Text>Already have an account?</Text>
 				<TouchableOpacity
-					onPress={() => handleLoginRedirect()}
+					onPress={() => props.navigation.navigate('login')}
 				>
 					<Text
 						style={styles.loginLink}
