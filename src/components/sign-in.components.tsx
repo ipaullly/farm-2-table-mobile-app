@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { AuthContext } from "../store/auth-context";
 
-const SignUp = (props: any) => {
-  const [fullName, setFullName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+const SignIn = (props: any) => {
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [hidePassword, setHidePassword] = useState(true)
+
+  const { signIn } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.header}>Hello,</Text>
-        <Text style={styles.instruction}>Sign Up</Text>
+        <Text style={styles.instruction}>Welcome Back!</Text>
       </View>
       <View>
         <View style={styles.inputBlock}>
@@ -20,44 +23,52 @@ const SignUp = (props: any) => {
             <Icon name="create" size={18} style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
-              placeholder="Full Name"
-              onChangeText={(e) => setFullName(e)}
+              placeholder="Phone No."
+              onChangeText={(e) => setPhone(e)}
             />
           </View>
           <View style={styles.textRow}>
-            <Icon style={styles.inputIcon} name="face" size={18} color="#900" />
+            <Icon name="lock" size={18} style={styles.inputIcon} />
             <TextInput
               style={styles.textInput}
-              placeholder="User Name"
-              onChangeText={(e) => setUserName(e)}
+              placeholder="Password"
+              secureTextEntry={hidePassword}
+              onChangeText={(e) => setPassword(e)}
             />
-          </View>
-          <View style={styles.textRow}>
-            <Icon
-              style={styles.inputIcon}
-              name="email"
-              size={18}
-              color="#900"
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Email"
-              onChangeText={(e) => setEmail(e)}
-            />
+            {hidePassword ? (
+              <TouchableOpacity
+                onPress={() => setHidePassword(false)}
+              >
+                <Icon 
+                name="visibility"
+                size={18} 
+                style={styles.inputIcon} 
+              />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={() => setHidePassword(true)}
+              >
+                <Icon 
+                  name="visibility-off" 
+                  size={18} style={styles.inputIcon}  
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => props.navigation.navigate("password")}
+            onPress={() => signIn({ phone, password })}
           >
-            <Text>Next</Text>
+            <Text>Login</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.loginText}>
-          <Text>Already have an account?</Text>
-          <TouchableOpacity onPress={() => props.navigation.navigate("login")}>
-            <Text style={styles.loginLink}>Login</Text>
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Don't have an account?</Text>
+          <TouchableOpacity onPress={() => props.navigation.navigate("register")}>
+            <Text style={styles.loginLink}>sign up!</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -65,7 +76,7 @@ const SignUp = (props: any) => {
   );
 };
 
-export default SignUp;
+export default SignIn;
 
 const styles = StyleSheet.create({
   container: {
@@ -109,11 +120,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center'
   },
-  loginText: {
+  loginContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
-    letterSpacing: 2,
+    justifyContent: "center"
+  },
+  loginText: {
+    letterSpacing: 2
   },
   loginLink: {
     textDecorationLine: "underline",
@@ -123,6 +136,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    width: '80%',
     borderBottomWidth: 1,
   },
 });
