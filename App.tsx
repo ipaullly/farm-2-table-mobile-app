@@ -18,7 +18,7 @@ import AuthAPI from './src/services/auth.services';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [userToken, setUserToken] = useState(null);
+  const [userToken, setUserToken] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isSignedOut, setIsSignedOut] = useState(false);
   const [initialAuthRoute, setInitialAuthRoute] = useState('login');
@@ -126,13 +126,6 @@ export default function App() {
                 component={HomeScreen}
                 options={{
                   title: 'Farm2Table',
-                  headerRight: () => (
-                    <Button
-                      onPress={() => authContext.signOut()}
-                      title="Log Out"
-                      color="#994"
-                    />
-                  ),
                 }}
                 />
               <Stack.Screen 

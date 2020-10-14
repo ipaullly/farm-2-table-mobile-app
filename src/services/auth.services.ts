@@ -29,10 +29,10 @@ export default class AuthAPI {
   static register = async (body: ISignUpBody) => {
     try {
       const response: any = await Axios.post('https://farm-2-table.herokuapp.com/api/user/register/', body);
-      console.log(response.data, 'success');
+      console.log(response, 'success');
       
       if ('id' in response.data){
-        return response.data
+        return response
       } 
     } catch (error) {
       return error.response.data    

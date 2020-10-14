@@ -47,8 +47,8 @@ const SignUp = (props: any) => {
       if ('password' in res) {
         setPasswordRes(res.password)
       }
-      if ('id' in res) {
-        setUser(res.name);
+      if ('id' in res.data) {
+        setUser(res.data.name);
       }
     }
     setSignUpLoading(false);
@@ -77,6 +77,7 @@ const SignUp = (props: any) => {
   }, [emailRes, phoneRes, nameRes, passwordRes, user])
   
   return (
+    <>
     <View style={styles.container}>
       <View>
         <Text style={styles.header}>Hello,</Text>
@@ -129,74 +130,14 @@ const SignUp = (props: any) => {
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
-              // onPress={() => handleRegister()}
-              onPress={() => setShowSuccessRegistration(true)}
+              onPress={() => handleRegister()}
+              // onPress={() => setShowSuccessRegistration(true)}
             >
               <Text>Register</Text>
             </TouchableOpacity>
           </View>
           <View>
-          <AwesomeAlert
-            show={showEmailAlert}
-            showProgress={false}
-            title="Validation Error"
-            message={emailRes? emailRes: ''}
-            closeOnTouchOutside={true}
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Ok"
-            confirmButtonColor="#e0a226"
-            
-            onConfirmPressed={() => {
-              setShowEmailAlert(false)
-            }}
-          />
-          <AwesomeAlert
-            show={showPhoneAlert}
-            showProgress={false}
-            title="Validation Error"
-            message={phoneRes? phoneRes: ''}
-            closeOnTouchOutside={false}
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Ok"
-            confirmButtonColor="#e0a226"
-            
-            onConfirmPressed={() => {
-              setShowPhoneAlert(false)
-            }}
-          />
-          <AwesomeAlert
-            show={showNameAlert}
-            showProgress={false}
-            title="Validation Error"
-            message={nameRes? nameRes: ''}
-            closeOnTouchOutside={false}
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Ok"
-            confirmButtonColor="#e0a226"
-            
-            onConfirmPressed={() => {
-              setShowNameAlert(false)
-            }}
-          />
-          <AwesomeAlert
-            show={showPasswordAlert}
-            showProgress={false}
-            title="Validation Error"
-            message={passwordRes? passwordRes: ''}
-            closeOnTouchOutside={false}
-            closeOnHardwareBackPress={false}
-            showConfirmButton={true}
-            confirmText="Ok"
-            confirmButtonColor="#e0a226"
-            
-            onConfirmPressed={() => {
-              setShowPasswordAlert(false)
-            }}
-          />
-          <AwesomeAlert
+          {/* <AwesomeAlert
             show={showSuccessRegistration}
             showProgress={false}
             title="Success"
@@ -211,7 +152,7 @@ const SignUp = (props: any) => {
               setShowSuccessRegistration(false);
               // props.navigation.navigate("login")
             }}
-          />
+          /> */}
           </View>
           <View style={styles.loginText}>
             <Text>Already have an account?</Text>
@@ -225,6 +166,83 @@ const SignUp = (props: any) => {
         <ActivityIndicator size="large" color="#33e026" />
       </View>) : null}
     </View>
+    <AwesomeAlert
+      show={showEmailAlert}
+      showProgress={false}
+      title="Email error"
+      message={emailRes? emailRes: ''}
+      closeOnTouchOutside={true}
+      closeOnHardwareBackPress={false}
+      showConfirmButton={true}
+      confirmText="Ok"
+      confirmButtonColor="#e0a226"
+      
+      onConfirmPressed={() => {
+        setShowEmailAlert(false)
+      }}
+    />
+    <AwesomeAlert
+      show={showPhoneAlert}
+      showProgress={false}
+      title="Phone no. error"
+      message={phoneRes? phoneRes: ''}
+      closeOnTouchOutside={false}
+      closeOnHardwareBackPress={false}
+      showConfirmButton={true}
+      confirmText="Ok"
+      confirmButtonColor="#e0a226"
+      
+      onConfirmPressed={() => {
+        setShowPhoneAlert(false)
+      }}
+    />
+    <AwesomeAlert
+      show={showNameAlert}
+      showProgress={false}
+      title="Name error"
+      message={nameRes? nameRes: ''}
+      closeOnTouchOutside={false}
+      closeOnHardwareBackPress={false}
+      showConfirmButton={true}
+      confirmText="Ok"
+      confirmButtonColor="#e0a226"
+      
+      onConfirmPressed={() => {
+        setShowNameAlert(false)
+      }}
+    />
+    <AwesomeAlert
+      show={showPasswordAlert}
+      showProgress={false}
+      title="Password error"
+      message={passwordRes? passwordRes: ''}
+      closeOnTouchOutside={false}
+      closeOnHardwareBackPress={false}
+      showConfirmButton={true}
+      confirmText="Ok"
+      confirmButtonColor="#e0a226"
+      
+      onConfirmPressed={() => {
+        setShowPasswordAlert(false)
+      }}
+    />
+    <AwesomeAlert
+      show={showSuccessRegistration}
+      showProgress={false}
+      title="Success"
+      message={`Account created for user ${user}`}
+      closeOnTouchOutside={true}
+      closeOnHardwareBackPress={false}
+      showConfirmButton={true}
+      confirmText="Sign In to Your Account"
+      confirmButtonColor="#58e026"
+      
+      onConfirmPressed={() => {
+        setShowSuccessRegistration(false);
+        props.navigation.navigate("login")
+      }}
+    />
+    </>
   );
 };
 
