@@ -6,5 +6,6 @@ export const AuthContext = createContext({
   userToken: null,
   signOut: () => {},
   signIn: (data: any) => Promise.resolve(),
-  signUp: (data: any) => Promise.resolve()
+  signUp: (data: any) => Promise.resolve(),
+  addProduct: (data: any) => {},
 });

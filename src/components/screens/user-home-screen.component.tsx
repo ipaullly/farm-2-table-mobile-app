@@ -1,9 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext } from 'react'
 import { Button } from 'react-native';
-import { AuthContext } from '../store/auth-context';
-import CategoryPage from './userHomeScreen/category-page.component';
-import UserHome from './userHomeScreen/user-home.component';
+import { AuthContext } from '../../store/auth-context';
+import CategoryPage from '../userHomeScreen/category-page.component';
+import UserHome from '../userHomeScreen/user-home.component';
 
 const UserHomeStack = createStackNavigator();
 

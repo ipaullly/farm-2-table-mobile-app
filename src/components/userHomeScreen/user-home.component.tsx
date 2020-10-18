@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Ionicons} from '@expo/vector-icons';
 import { View,Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { SearchBar } from 'react-native-elements';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import ProductCard from './product-card.component';
 
 
 const categories = [
@@ -38,7 +38,7 @@ const vendors = [
 
 ]
 
-const products = [
+export const products = [
   {
     name: 'Cabbage',
     price: '300',
@@ -67,16 +67,8 @@ const UserHome = (props: any) => {
 
   const [searchText, setSearchText] = useState('');
 
-  const handleAddToCart = () => {
-    // add selected item to the cart
-  }
-
-  const handleAddToWishList = () => {
-    // handle adding selected item to wish list
-  }
-
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
     <View>
     <SearchBar
       platform='android'
@@ -99,18 +91,17 @@ const UserHome = (props: any) => {
     <View style={styles.categories}>
       {categories.map((category, index) => {
         return (
-          
           <TouchableOpacity
-          onPress={() => props.navigation.push("Category")} style={styles.categoryCard}>
-              <Text style={styles.categoryTitle}>{category.name}</Text>
-              <View style={styles.logo} key={index}>
-                <Image
-                  source={{ uri: category.uri }}
-                  style = {{ width: 50, height: 40, borderRadius: 4 }}
-                />
-              </View>
-            </TouchableOpacity>
-        
+            onPress={() => props.navigation.push("Category")} style={styles.categoryCard}
+          >
+            <Text style={styles.categoryTitle}>{category.name}</Text>
+            <View style={styles.logo} key={index}>
+              <Image
+                source={{ uri: category.uri }}
+                style = {{ width: 50, height: 40, borderRadius: 4 }}
+              />
+            </View>
+          </TouchableOpacity>
         )
       }
       )}
@@ -150,51 +141,11 @@ const UserHome = (props: any) => {
     >
       {
         products.map((item, index) => (
-          <TouchableOpacity
-            onPress={() => props.navigation.push("Category")} 
-            style={styles.productCard}
-            key={index}
-          >
-            <View style={{ display: 'flex', alignItems: 'center' }}>
-              <Image
-                source={{ uri: item.uri }}
-                style = {{ width: 90, height: 50 }}
-              />
-            </View>
-            <View style={{
-              marginLeft: 10,
-            }}>
-              <Text style={styles.productPrice}>Ksh. {item.price}</Text>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.productUnit}>{item.unit}</Text>
-            </View>
-            <View style={styles.productActionIcons}>
-              <>
-                <Ionicons 
-                  onPress={() => handleAddToWishList()}
-                  name='ios-heart-empty' 
-                  size={24}
-                />
-              </>
-              <>
-                <Ionicons 
-                  onPress={() => handleAddToCart()}
-                  name='ios-add-circle-outline' 
-                  size={24}
-                  style={{
-                    backgroundColor: '#ccff66',
-                    borderRadius: 50,
-                    height: 23
-                  }}
-                />
-              </>
-            </View>
-          </TouchableOpacity>
+          <ProductCard item={item} index={index}/>
         ))
       }  
     </ScrollView>
-    
-  </View>
+  </ScrollView>
   )
 }
 
@@ -286,26 +237,4 @@ const styles = StyleSheet.create({
   productCardGrid: {
     marginTop: 10,
   },
-  productTag: {},
-  productTitle: {},
-  productPrice: {
-    fontStyle: 'italic',
-    color: 'gray'
-  },
-  productUnit: {
-    color: 'gray'
-  },
-  productName: {
-    fontSize: 20,
-    textTransform: 'uppercase',
-    fontWeight: '800',
-    width: 180
-  },
-  productActionIcons: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    alignItems: 'flex-end'
-  }
 })

@@ -8,10 +8,9 @@ const CategoryPage = (props: any) => {
     <View style={styles.container}>
       <Ionicons 
         onPress={() => props.navigation.goBack()}
-      name='ios-arrow-dropleft-circle' 
-      
-      size={32}/>
-      
+        name='ios-arrow-dropleft-circle'  
+        size={32}
+      />
       <Text>CategoryPage</Text>
     </View>
   )

@@ -23,7 +23,7 @@ export default class AuthAPI {
       console.log(response);
       
     } catch (error) {
-      console.log(error, 'login api error');    
+      console.log(error.response.data, 'login api error');    
     }
   } 
   static register = async (body: ISignUpBody) => {
