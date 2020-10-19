@@ -17,7 +17,7 @@ const VendorShop = (props: any) => {
       >
         {
           products.map((item, index) => (
-            <ProductCard item={item} index={index}/>
+            <ProductCard item={item} key={index}/>
           ))
         }  
       </ScrollView>

@@ -7,7 +7,7 @@ const VendorHomeStack = createStackNavigator();
 
 const VendorHomeScreen = (props: any) => {
   return (
-    <VendorHomeStack.Navigator initialRouteName={'VendorShop'}>
+    <VendorHomeStack.Navigator initialRouteName={'AddProduct'}>
       <VendorHomeStack.Screen 
         name='VendorShop' 
         component={VendorShop}

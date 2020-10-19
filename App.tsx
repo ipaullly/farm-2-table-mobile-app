@@ -15,6 +15,7 @@ import { AuthContext } from './src/store/auth-context';
 import AuthAPI from './src/services/auth.services';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import VendorScreen from './src/components/screens/vendor-screen.component';
+import ProductsAPI from './src/services/products.services';
 
 const Stack = createStackNavigator();
 
@@ -91,8 +92,9 @@ export default function App() {
         const res = await AuthAPI.register(registrationBody);
         return res
       },
-      addProduct: () => {
-
+      addProduct: async (data: any) => {
+        const res = await ProductsAPI.addProduct(data)
+        return res;
       }
     }), [])
 
