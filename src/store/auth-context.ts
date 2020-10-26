@@ -8,4 +8,5 @@ export const AuthContext = createContext({
   signIn: (data: any) => Promise.resolve(),
   signUp: (data: any) => Promise.resolve(),
   addProduct: (data: any) => {},
+  getProducts: () => Promise.resolve()
 });

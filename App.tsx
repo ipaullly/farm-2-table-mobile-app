@@ -95,6 +95,10 @@ export default function App() {
       addProduct: async (data: any) => {
         const res = await ProductsAPI.addProduct(data)
         return res;
+      },
+      getProducts: async () => {
+        const res = await ProductsAPI.getProducts();
+        return res;
       }
     }), [])
 
@@ -110,7 +114,8 @@ export default function App() {
       signIn: authContext.signIn,
       signOut: authContext.signOut,
       signUp: authContext.signUp,
-      addProduct: authContext.addProduct
+      addProduct: authContext.addProduct,
+      getProducts: authContext.getProducts
     }}>
       <NavigationContainer>
         {
@@ -147,11 +152,18 @@ export default function App() {
                   headerStyle: { backgroundColor: 'purple' },
                   headerTintColor: 'gold',
                   headerRight: () => (
-                    <Button
-                      onPress={() => authContext.signOut()}
-                      title="sign out"
-                      color="#909"
-                    />
+                    <View style={styles.buttonRow}>
+                      <Button
+                        onPress={() => authContext.signOut()}
+                        title="sign out"
+                        color="#909"
+                      />
+                      <Button
+                        onPress={() => setRole('Vendor')}
+                        title="Switch to Vendor"
+                        color="#409"
+                      />
+                    </View>
                   ),
                 }}
                 >
@@ -212,4 +224,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
+  buttonRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  }
 });

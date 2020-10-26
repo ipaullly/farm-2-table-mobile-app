@@ -5,12 +5,13 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { AuthContext } from '../../store/auth-context';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-const AddProduct = (props: any) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [category, setCategory] = useState('');
+const EditProduct = (props: any) => {
+  const { name, description, price, quantity, category  } = props.route.params
+  const [editName, setEditName] = useState(name);
+  const [editDescription, setEditDescription] = useState(description);
+  const [editPrice, setEditPrice] = useState(price);
+  const [editQuantity, setEditQuantity] = useState(quantity);
+  const [editCategory, setEditCategory] = useState(category);
 
   const [nameRes, setNameRes] = useState<any>(null);
   const [priceRes, setPriceRes] = useState<any>(null);
@@ -29,37 +30,41 @@ const AddProduct = (props: any) => {
 
   const { addProduct } = useContext(AuthContext);
 
-  const handleAddProduct = async ( ) => {
+  const handleEditProduct = async ( ) => {
     setAddProductLoading(true)
-    const res: any = await addProduct({ name, description, quantity, price, category });
-    console.log(res, 'addProducts');
+    // const res: any = await addProduct({ name, description, quantity, price, category });
+    // console.log(res, 'addProducts');
     
-    if (typeof res === 'object' && res !== null) {
-      if ('data' in res) {
-        setFeedback(res.data.name)
-      }
-      if ('quantity' in res) {
-        setUnitRes(res.quantity)
-      }
-      if ('price' in res) {
-        setPriceRes(res.price)
-      }
-      if ('name' in res) {
-        setNameRes(res.name)
-      }
-      if ('category' in res) {
-        setCategoryRes(res.category)
-      }
-      if ('description' in res) {
-        setDescriptionRes(res.description);
-      }
-    }
+    // if (typeof res === 'object' && res !== null) {
+    //   if ('data' in res) {
+    //     setFeedback(res.data.name)
+    //   }
+    //   if ('quantity' in res) {
+    //     setUnitRes(res.quantity)
+    //   }
+    //   if ('price' in res) {
+    //     setPriceRes(res.price)
+    //   }
+    //   if ('name' in res) {
+    //     setNameRes(res.name)
+    //   }
+    //   if ('category' in res) {
+    //     setCategoryRes(res.category)
+    //   }
+    //   if ('description' in res) {
+    //     setDescriptionRes(res.description);
+    //   }
+    // }
     setAddProductLoading(false);
     // setShowEmailAlert(false)
     // setShowPhoneAlert(false)
     // setShowNameAlert(false)
     // setShowPasswordAlert(false)
   };
+  
+  const handleCancelProduct = () => {
+
+  }
 
   useEffect(() => {
     if(nameRes) {
@@ -96,7 +101,7 @@ const AddProduct = (props: any) => {
           <ActivityIndicator size="large" color="#33e026" />
         </View>) : null}
         <View style={styles.vendorTitle}>
-          <Text style={styles.vendorTag}>Add Products To Store</Text>
+          <Text style={styles.vendorTag}>Edit Product</Text>
           <Text style={styles.seeAll}> </Text>
         </View>
         <View>
@@ -104,37 +109,37 @@ const AddProduct = (props: any) => {
             <Text>Product Name</Text>
             <TextInput
               style={styles.textInput}
-              onChangeText={text => setName(text)}
-              value={name}
+              onChangeText={text => setEditName(text)}
+              value={editName}
             />
           </View>
           <View style={styles.textInputBlock}>
             <Text>Unit(s)</Text>
             <TextInput
               style={styles.textInput}
-              onChangeText={text => setQuantity(text)}
-              value={quantity}
+              onChangeText={text => setEditQuantity(text)}
+              value={editQuantity}
             />
           </View>
           <View style={styles.textInputBlock}>
             <Text>Price</Text>
             <TextInput
               style={styles.textInput}
-              onChangeText={text => setPrice(text)}
-              value={price}
+              onChangeText={text => setEditPrice(text)}
+              value={editPrice}
             />
           </View>
           <View style={styles.textInputBlock}>
             <Text>Category</Text>
             <Picker
-              selectedValue={category}
+              selectedValue={editCategory}
               style={{
                 height: 50,
                 borderRadius: 5,
                 width: '60%',
                 textAlign: 'center'
               }}
-              onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+              onValueChange={(itemValue, itemIndex) => setEditCategory(itemValue)}
             >
               <Picker.Item label="select category..." value="" />
               <Picker.Item label="Vegetables" value="vegetables" />
@@ -148,16 +153,22 @@ const AddProduct = (props: any) => {
             <TextInput
               multiline={true}
               style={styles.multilineTextInput}
-              onChangeText={text => setDescription(text)}
-              value={description}
+              onChangeText={text => setEditDescription(text)}
+              value={editDescription}
             />
           </View>
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleAddProduct()}
+              onPress={() => handleEditProduct()}
             >
-              <Text>ADD PRODUCT</Text>
+              <Text>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonDelete}
+              onPress={() => handleCancelProduct()}
+            >
+              <Text>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -262,7 +273,7 @@ const AddProduct = (props: any) => {
   )
 }
 
-export default AddProduct
+export default EditProduct
 
 const styles = StyleSheet.create({
   container: {
@@ -301,6 +312,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 10,
+    textAlign: 'center'
   },
   textInputBlock: {
     marginBottom: 20,
@@ -318,6 +330,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#fcba03',
+    padding: 10,
+    borderRadius: 6,
+    width: '40%',
+    textAlign: 'center',
+  },
+  buttonDelete: {
+    backgroundColor: '#ff765e',
     padding: 10,
     borderRadius: 6,
     width: '40%',

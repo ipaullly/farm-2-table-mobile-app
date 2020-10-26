@@ -47,5 +47,32 @@ export default class ProductsAPI {
       console.log(error.response.data, 'add Product api error');
       return error.response.data;    
     }
-  } 
+  }
+  static getProducts = async () => {
+    let userToken;
+    try {
+      userToken = await AsyncStorage.getItem('userToken');
+    } catch (e) {
+      // restoration of token failed throw error
+    };
+
+    try {
+      const response = await Axios.get(
+        'https://farm-2-table.herokuapp.com/api/produce/list/',
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`
+          }
+        }
+        );
+      if (response){
+        return response
+      }
+      console.log(response, 'Get products API');
+      
+    } catch (error) {
+      console.log(error.response.data, 'get Product api error');
+      return error.response.data;    
+    }
+  }
 }

@@ -10,22 +10,30 @@ const VendorShop = (props: any) => {
     <ScrollView style={styles.container}>
       <View style={styles.vendorTitle}>
         <Text style={styles.vendorTag}>Top Selling</Text>
-        <Text style={styles.seeAll}>SEE ALL</Text>
+        <TouchableOpacity
+          onPress={() => props.navigation.push("ProductList")} 
+        >
+          <Text style={styles.seeAll}>SEE ALL</Text>
+        </TouchableOpacity>
       </View>
       <ScrollView
         style={styles.productCardGrid}
       >
         {
           products.map((item, index) => (
-            <ProductCard item={item} key={index}/>
+            <ProductCard 
+              item={item}
+              key={index}
+              navigation={props.navigation}  
+            />
           ))
         }  
       </ScrollView>
-      <View>
+      <View style={styles.addIcon}>
         <Ionicons 
           onPress={() => props.navigation.push('AddProduct')}
           name='ios-add-circle-outline' 
-          size={32}
+          size={50}
           // style={{
           //   backgroundColor: 'black',
           // }}
@@ -63,4 +71,9 @@ const styles = StyleSheet.create({
   productCardGrid: {
     marginTop: 10,
   },
+  addIcon: {
+    position: "absolute",
+    top: '72vh',
+    left:'83vw'
+  }
 })
